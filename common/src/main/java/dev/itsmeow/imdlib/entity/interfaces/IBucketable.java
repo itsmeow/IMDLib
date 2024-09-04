@@ -13,7 +13,7 @@ public interface IBucketable extends IContainable {
     @Override
     default void onPickupSuccess(Player player, InteractionHand hand, ItemStack stack) {
         this.getImplementation().playSound(SoundEvents.BUCKET_FILL_FISH, 1.0F, 1.0F);
-        if (!this.getImplementation().level.isClientSide) {
+        if (!this.getImplementation().level().isClientSide) {
             CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, stack);
         }
     }

@@ -1,6 +1,6 @@
 package dev.itsmeow.imdlib.item;
 
-import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.itsmeow.imdlib.entity.EntityTypeContainer;
 import dev.itsmeow.imdlib.entity.interfaces.IContainable;
 import dev.itsmeow.imdlib.entity.util.EntityTypeContainerContainable;
@@ -32,11 +32,11 @@ public class ItemModEntityContainer<T extends Mob & IContainable> extends Item i
     protected final EntityTypeContainerContainable<T, ItemModEntityContainer<T>> typeContainer;
     protected final ITooltipFunction tooltip;
 
-    public ItemModEntityContainer(EntityTypeContainerContainable<T, ItemModEntityContainer<T>> typeContainer, CreativeTabRegistry.TabSupplier group) {
+    public ItemModEntityContainer(EntityTypeContainerContainable<T, ItemModEntityContainer<T>> typeContainer, DeferredSupplier<CreativeModeTab> group) {
         this(typeContainer, IContainerItem.VARIANT_TOOLTIP, group);
     }
 
-    public ItemModEntityContainer(EntityTypeContainerContainable<T, ItemModEntityContainer<T>> typeContainer, ITooltipFunction tooltip, CreativeTabRegistry.TabSupplier group) {
+    public ItemModEntityContainer(EntityTypeContainerContainable<T, ItemModEntityContainer<T>> typeContainer, ITooltipFunction tooltip, DeferredSupplier<CreativeModeTab> group) {
         super(new Item.Properties().stacksTo(1).arch$tab(group));
         this.typeContainer = typeContainer;
         this.tooltip = tooltip;
@@ -56,7 +56,7 @@ public class ItemModEntityContainer<T extends Mob & IContainable> extends Item i
         return (container, tooltip) -> new ItemModEntityContainer<>(container, tooltip, group);
     }
 
-    public static <T extends Mob & IContainable> BiFunction<EntityTypeContainerContainable<T, ItemModEntityContainer<T>>, ITooltipFunction, ItemModEntityContainer<T>> get(CreativeTabRegistry.TabSupplier group) {
+    public static <T extends Mob & IContainable> BiFunction<EntityTypeContainerContainable<T, ItemModEntityContainer<T>>, ITooltipFunction, ItemModEntityContainer<T>> get(DeferredSupplier<CreativeModeTab> group) {
         return (container, tooltip) -> new ItemModEntityContainer<>(container, tooltip, group);
     }
 

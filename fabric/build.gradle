@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.1"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 architectury {
@@ -66,7 +66,7 @@ processResources {
 
 shadowJar {
     configurations = [project.configurations.shadowCommon, project.configurations.shadowImplementation, project.configurations.shadowModApi]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
     relocate "io.fablabsmc.fablabs", "dev.itsmeow.imdlib.shadow.fablabs"
     relocate "me.shedaniel.fiber2cloth", "dev.itsmeow.imdlib.shadow.fiber2cloth"
 }
@@ -74,11 +74,11 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier "fabric"
+    archiveClassifier = "fabric"
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
     manifest {
         attributes(
                 "Maven-Artifact": "${rootProject.maven_group}:${rootProject.mod_id}-${project.name}:${rootProject.version}",

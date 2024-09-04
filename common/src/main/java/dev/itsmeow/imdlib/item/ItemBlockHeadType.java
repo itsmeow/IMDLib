@@ -1,6 +1,6 @@
 package dev.itsmeow.imdlib.item;
 
-import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.itsmeow.imdlib.entity.util.variant.IVariant;
 import dev.itsmeow.imdlib.util.HeadType;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,7 +12,7 @@ public class ItemBlockHeadType extends ItemBlockSkull {
 
     private final HeadType type;
 
-    public ItemBlockHeadType(Block block, HeadType type, String id, IVariant variant, CreativeTabRegistry.TabSupplier group) {
+    public ItemBlockHeadType(Block block, HeadType type, String id, IVariant variant, DeferredSupplier<CreativeModeTab> group) {
         this(block, type, id, variant, new Item.Properties().arch$tab(group));
     }
 

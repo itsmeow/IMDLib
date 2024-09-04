@@ -1,7 +1,7 @@
 package dev.itsmeow.imdlib.item;
 
 
-import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.itsmeow.imdlib.entity.EntityTypeContainer;
 import dev.itsmeow.imdlib.entity.interfaces.IContainable;
 import dev.itsmeow.imdlib.entity.util.EntityTypeContainerContainable;
@@ -29,11 +29,11 @@ public class ItemModFishBucket<T extends Mob & IContainable> extends BucketItem 
     private final EntityTypeContainerContainable<T, ItemModFishBucket<T>> typeContainer;
     private final ITooltipFunction tooltip;
 
-    public ItemModFishBucket(EntityTypeContainerContainable<T, ItemModFishBucket<T>> typeContainer, Supplier<? extends Fluid> fluid, CreativeTabRegistry.TabSupplier group) {
+    public ItemModFishBucket(EntityTypeContainerContainable<T, ItemModFishBucket<T>> typeContainer, Supplier<? extends Fluid> fluid, DeferredSupplier<CreativeModeTab> group) {
         this(typeContainer, fluid, IContainerItem.VARIANT_TOOLTIP, group);
     }
 
-    public ItemModFishBucket(EntityTypeContainerContainable<T, ItemModFishBucket<T>> typeContainer, Supplier<? extends Fluid> fluid, ITooltipFunction tooltip, CreativeTabRegistry.TabSupplier group) {
+    public ItemModFishBucket(EntityTypeContainerContainable<T, ItemModFishBucket<T>> typeContainer, Supplier<? extends Fluid> fluid, ITooltipFunction tooltip, DeferredSupplier<CreativeModeTab> group) {
         super(fluid.get(), new Item.Properties().stacksTo(1).arch$tab(group));
         this.typeContainer = typeContainer;
         this.tooltip = tooltip;
@@ -49,7 +49,7 @@ public class ItemModFishBucket<T extends Mob & IContainable> extends BucketItem 
         this.tooltip = tooltip;
     }
 
-    public static <T extends Mob & IContainable> BiFunction<EntityTypeContainerContainable<T, ItemModFishBucket<T>>, ITooltipFunction, ItemModFishBucket<T>> waterBucket(CreativeTabRegistry.TabSupplier group) {
+    public static <T extends Mob & IContainable> BiFunction<EntityTypeContainerContainable<T, ItemModFishBucket<T>>, ITooltipFunction, ItemModFishBucket<T>> waterBucket(DeferredSupplier<CreativeModeTab> group) {
         return (container, tooltip) -> new ItemModFishBucket<>(container, () -> Fluids.WATER, tooltip, group);
     }
 

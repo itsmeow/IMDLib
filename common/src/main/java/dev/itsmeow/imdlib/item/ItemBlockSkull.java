@@ -1,6 +1,6 @@
 package dev.itsmeow.imdlib.item;
 
-import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.itsmeow.imdlib.block.AnimalSkullBlock;
 import dev.itsmeow.imdlib.entity.util.variant.IVariant;
 import dev.itsmeow.imdlib.util.HeadType.PlacementType;
@@ -28,7 +28,7 @@ public class ItemBlockSkull extends StandingAndWallBlockItem {
     public final String id;
     public final IVariant variant;
 
-    public ItemBlockSkull(Block block, PlacementType placement, String id, IVariant variant, CreativeTabRegistry.TabSupplier group) {
+    public ItemBlockSkull(Block block, PlacementType placement, String id, IVariant variant, DeferredSupplier<CreativeModeTab> group) {
         this(block, placement, id, variant, new Item.Properties().arch$tab(group));
     }
 

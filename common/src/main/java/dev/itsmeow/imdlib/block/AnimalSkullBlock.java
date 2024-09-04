@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -31,7 +31,7 @@ public abstract class AnimalSkullBlock extends Block implements SimpleWaterlogge
             Direction.UP, Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D)));
 
     public AnimalSkullBlock() {
-        super(Block.Properties.of(Material.WOOL).sound(SoundType.STONE).strength(0.8F));
+        super(Block.Properties.of().mapColor(MapColor.WOOL).sound(SoundType.STONE).strength(0.8F));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING_EXCEPT_DOWN, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false).setValue(TOP_FACING, Direction.NORTH));
     }
 

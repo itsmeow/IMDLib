@@ -1,7 +1,7 @@
 package dev.itsmeow.imdlib.util;
 
 import dev.architectury.platform.Platform;
-import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.architectury.registry.registries.RegistrarManager;
 import dev.architectury.registry.registries.RegistrySupplier;
 import dev.itsmeow.imdlib.IMDLib;
@@ -57,7 +57,7 @@ public class HeadType {
     private final Map<ResourceLocation, IVariant> reverseVariantMap = new HashMap<>();
     private final Consumer<RegistrarManager> registerVariants;
 
-    public HeadType(String modid, CreativeModeTab group, CreativeTabRegistry.TabSupplier group_Supplied, String name, PlacementType placement, HeadIDMapping mapping, @Nullable Function<IVariant, String> variantMapper, @Nullable IVariant singletonVariant, @Nullable String singletonID, EntityTypeContainer<? extends LivingEntity> container) {
+    public HeadType(String modid, CreativeModeTab group, DeferredSupplier<CreativeModeTab> group_Supplied, String name, PlacementType placement, HeadIDMapping mapping, @Nullable Function<IVariant, String> variantMapper, @Nullable IVariant singletonVariant, @Nullable String singletonID, EntityTypeContainer<? extends LivingEntity> container) {
         this.name = name;
         this.modid = modid;
         this.placement = placement;
@@ -104,7 +104,7 @@ public class HeadType {
         registerVariants.accept(registries);
     }
 
-    protected void setupVariant(RegistrarManager registries, IVariant variant, CreativeModeTab group, CreativeTabRegistry.TabSupplier group_Supplied, String id) {
+    protected void setupVariant(RegistrarManager registries, IVariant variant, CreativeModeTab group, DeferredSupplier<CreativeModeTab> group_Supplied, String id) {
         ResourceLocation rl = new ResourceLocation(this.getMod(), this.getName() + "_" + id);
         RegistrySupplier<GenericSkullBlock> block = registries.get(Registries.BLOCK).register(rl, () -> new GenericSkullBlock(this, id));
         RegistrySupplier<ItemBlockHeadType> item;
@@ -213,7 +213,7 @@ public class HeadType {
     }
 
     public void drop(Mob entity, int chance, IVariant variant) {
-        if (variant != null && !entity.level.isClientSide && !entity.isBaby()) {
+        if (variant != null && !entity.level().isClientSide && !entity.isBaby()) {
             if (entity.getRandom().nextInt(chance) == 0) {
                 ItemStack stack = new ItemStack(this.getItemForVariant(variant).get());
                 entity.spawnAtLocation(stack, 0.5F);
@@ -259,7 +259,7 @@ public class HeadType {
         private IVariant singletonVariant;
         private String singletonID;
         private CreativeModeTab group;
-        private CreativeTabRegistry.TabSupplier group_Supplied;
+        private DeferredSupplier<CreativeModeTab> group_Supplied;
 
         public Builder(B initial, String name) {
             this.initial = initial;
@@ -273,7 +273,7 @@ public class HeadType {
             return this;
         }
 
-        public Builder<T, C, B> itemGroup(CreativeTabRegistry.TabSupplier group) {
+        public Builder<T, C, B> itemGroup(DeferredSupplier<CreativeModeTab> group) {
             this.group_Supplied = group;
             return this;
         }
